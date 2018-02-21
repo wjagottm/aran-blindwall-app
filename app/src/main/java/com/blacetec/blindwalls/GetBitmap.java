@@ -23,8 +23,17 @@ public class GetBitmap extends AsyncTask<String, Void, Bitmap> {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoInput(true);
             connection.connect();
-            InputStream input = connection.getInputStream();
-            return BitmapFactory.decodeStream(input);
+            if(connection.getResponseCode() == 200) {
+                InputStream input = connection.getInputStream();
+                return BitmapFactory.decodeStream(input);
+            } else {
+                url = new URL("https://renderman.pixar.com/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png");
+                connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.connect();
+                InputStream input = connection.getInputStream();
+                return BitmapFactory.decodeStream(input);
+            }
         } catch (IOException e) {
             Log.e("GetBitmap", "Convertion failed: " + e.getLocalizedMessage());
             return null;

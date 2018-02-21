@@ -17,13 +17,14 @@ public class MainActivity extends AppCompatActivity implements OnBlindWallsAvail
     private BlindWallAdapter mBlindWallAdapter;
     private BlindwallDBHandler blindwallDBHandler;
     private ArrayList<BlindWall> blindWalls = new ArrayList<>();
+    private boolean loadedFromDatabase = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        blindwallDBHandler = new BlindwallDBHandler(getApplicationContext(), "blindWall.db", null, 10);
+        blindwallDBHandler = new BlindwallDBHandler(getApplicationContext(), "blindWall.db", null, 11);
 
         String[] urls = new String[] { "https://api.blindwalls.gallery/apiv2/murals" };
 
@@ -31,7 +32,8 @@ public class MainActivity extends AppCompatActivity implements OnBlindWallsAvail
         getProducts.execute(urls);
 
         if (!blindwallDBHandler.isDatabaseEmpty()) {
-            blindWalls = blindwallDBHandler.getAllWalls();
+            blindWalls = blindwallDBHandler.getAllWalls(true);
+            loadedFromDatabase = true;
         }
 
         mBlindWallListView = (ListView) findViewById(R.id.blindwall_listview);
@@ -52,9 +54,11 @@ public class MainActivity extends AppCompatActivity implements OnBlindWallsAvail
 
     @Override
     public void OnBlindWallsAvailable(BlindWall blindWall) {
-        blindWalls.add(blindWall);
+        if (!loadedFromDatabase) {
+            blindWalls.add(blindWall);
+        }
         blindwallDBHandler.addBlindWall(blindWall);
-        Log.i(TAG, "Blindwall Added (" + blindWall.getTitle() + ")");
+        Log.i(TAG, "Blindwall Added or Updated (" + blindWall.getTitle() + ")");
         mBlindWallAdapter.notifyDataSetChanged();
     }
 }

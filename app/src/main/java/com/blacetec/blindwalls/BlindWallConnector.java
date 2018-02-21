@@ -75,7 +75,7 @@ public class BlindWallConnector extends AsyncTask<String, Void, String> {
                 final String address = blindWall.getString("address");
                 final int addressNumber = blindWall.getInt("numberOnMap");
 
-                GetBitmap getByteArray = new GetBitmap(){
+                GetBitmap getBitmap = new GetBitmap(){
                     @Override
                     protected void onPostExecute(Bitmap bmp) {
                         byte[] imageBArray = null;
@@ -97,7 +97,7 @@ public class BlindWallConnector extends AsyncTask<String, Void, String> {
                     }
                 };
 
-                getByteArray.execute(imageString);
+                getBitmap.execute(imageString);
 
 
             }

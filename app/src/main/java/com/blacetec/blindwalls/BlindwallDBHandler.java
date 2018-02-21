@@ -22,7 +22,7 @@ public class BlindwallDBHandler extends SQLiteOpenHelper {
         Log.i(TAG, "onCreate called");
 
         sqLiteDatabase.execSQL("CREATE TABLE `BlindWall` (\n" +
-            "\t`id`\tINTEGER,\n" +
+            "\t`id`\tINTEGER PRIMARY KEY,\n" +
             "\t`title`\tTEXT,\n" +
             "\t`address`\tTEXT,\n" +
             "\t`addressNumber`\tINTEGER,\n" +
@@ -40,19 +40,22 @@ public class BlindwallDBHandler extends SQLiteOpenHelper {
         this.onCreate(sqLiteDatabase);
     }
 
-    public ArrayList<BlindWall> getAllWalls() {
+    public ArrayList<BlindWall> getAllWalls(boolean shout) {
         String query = "SELECT * FROM BlindWall";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
         ArrayList<BlindWall> blindWalls = new ArrayList<>();
-
-        Log.i(TAG, "Amount of results: " + cursor.getCount());
+        if(shout) {
+            Log.i(TAG, "Amount of results: " + cursor.getCount());
+        }
 
         cursor.moveToFirst();
         while(!cursor.isLast()) {
-            Log.i(TAG, "Getting BlindWall: (" + cursor.getString(cursor.getColumnIndex("title")) + ")");
+            if(shout) {
+                Log.i(TAG, "Getting BlindWall: (" + cursor.getString(cursor.getColumnIndex("title")) + ")");
+            }
             int id = cursor.getInt(cursor.getColumnIndex("id"));
             String title = cursor.getString(cursor.getColumnIndex("title"));
             String address = cursor.getString(cursor.getColumnIndex("address"));
