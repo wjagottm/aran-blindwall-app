@@ -2,10 +2,6 @@ package com.blacetec.blindwalls;
 
 import java.io.Serializable;
 
-/**
- * Created by arant on 2/20/2018.
- */
-
 public class BlindWall implements Serializable {
     private int id;
     private String title;

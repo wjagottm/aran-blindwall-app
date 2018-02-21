@@ -9,7 +9,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements OnBlindWallsAvailable {
     private static final String TAG = "MainActivity";
@@ -24,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements OnBlindWallsAvail
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        blindwallDBHandler = new BlindwallDBHandler(getApplicationContext(), "blindWall.db", null, 11);
+        blindwallDBHandler = new BlindwallDBHandler(getApplicationContext(), "blindWall.db", null, 12);
 
         String[] urls = new String[] { "https://api.blindwalls.gallery/apiv2/murals" };
 

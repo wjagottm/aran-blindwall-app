@@ -10,16 +10,12 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-/**
- * Created by arant on 2/21/2018.
- */
-
 public class GetBitmap extends AsyncTask<String, Void, Bitmap> {
 
     @Override
     protected Bitmap doInBackground(String... strings) {
         try {
-            URL url = new URL(strings[0]);
+            URL url = new URL(strings[0].toLowerCase());
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoInput(true);
             connection.connect();

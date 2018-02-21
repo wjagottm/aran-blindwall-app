@@ -8,8 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 
 public class DetailedBlindWallActivity extends AppCompatActivity {
     @Override
