@@ -41,8 +41,6 @@ public class BlindwallDBHandler extends SQLiteOpenHelper {
     }
 
     public ArrayList<BlindWall> getAllWalls() {
-        Log.i(TAG, "getAllWalls called");
-
         String query = "SELECT * FROM BlindWall";
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -50,8 +48,11 @@ public class BlindwallDBHandler extends SQLiteOpenHelper {
 
         ArrayList<BlindWall> blindWalls = new ArrayList<>();
 
+        Log.i(TAG, "Amount of results: " + cursor.getCount());
+
         cursor.moveToFirst();
         while(!cursor.isLast()) {
+            Log.i(TAG, "Getting BlindWall: (" + cursor.getString(cursor.getColumnIndex("title")) + ")");
             int id = cursor.getInt(cursor.getColumnIndex("id"));
             String title = cursor.getString(cursor.getColumnIndex("title"));
             String address = cursor.getString(cursor.getColumnIndex("address"));

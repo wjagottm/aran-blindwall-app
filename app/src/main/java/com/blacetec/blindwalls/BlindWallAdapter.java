@@ -67,7 +67,6 @@ public class BlindWallAdapter extends BaseAdapter {
         viewHolder.title.setText(blindWall.getTitle());
 
         if(blindWall.getImage()!=null){
-            Log.i(TAG, "Setting the image");
             Bitmap imageMap = BitmapFactory.decodeByteArray(blindWall.getImage(), 0, blindWall.getImage().length);
             viewHolder.imageView.setImageBitmap(imageMap);
         }
