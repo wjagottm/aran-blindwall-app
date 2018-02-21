@@ -81,7 +81,6 @@ public class BlindWallConnector extends AsyncTask<String, Void, String> {
                         byte[] imageBArray = null;
                         if (bmp != null)
                         {
-                            Log.i(TAG, "compressing to ByteArray");
                             super.onPostExecute(bmp);
 
                             Bitmap bm = bmp;
@@ -90,7 +89,7 @@ public class BlindWallConnector extends AsyncTask<String, Void, String> {
                             bm.compress(Bitmap.CompressFormat.JPEG, 40, bos);
                             imageBArray = bos.toByteArray();
                         } else {
-                            Log.i(TAG, "No BMP data found.");
+                            Log.e(TAG, "No BMP data found.");
                         }
 
                         BlindWall b = new BlindWall(id, title, address, photographer, addressNumber, description, imageBArray, material);
