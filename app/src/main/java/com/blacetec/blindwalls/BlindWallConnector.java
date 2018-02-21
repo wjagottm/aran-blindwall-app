@@ -75,7 +75,7 @@ public class BlindWallConnector extends AsyncTask<String, Void, String> {
                 final String address = blindWall.getString("address");
                 final int addressNumber = blindWall.getInt("numberOnMap");
 
-                getByteArray getByteArray = new getByteArray(){
+                GetBitmap getByteArray = new GetBitmap(){
                     @Override
                     protected void onPostExecute(Bitmap bmp) {
                         byte[] imageBArray = null;
@@ -86,7 +86,7 @@ public class BlindWallConnector extends AsyncTask<String, Void, String> {
                             Bitmap bm = bmp;
 
                             ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                            bm.compress(Bitmap.CompressFormat.JPEG, 40, bos);
+                            bm.compress(Bitmap.CompressFormat.JPEG, 30, bos);
                             imageBArray = bos.toByteArray();
                         } else {
                             Log.e(TAG, "No BMP data found.");
