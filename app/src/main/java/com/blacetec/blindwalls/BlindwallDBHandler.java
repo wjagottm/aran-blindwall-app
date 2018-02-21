@@ -28,7 +28,7 @@ public class BlindwallDBHandler extends SQLiteOpenHelper {
             "\t`addressNumber`\tINTEGER,\n" +
             "\t`photographer`\tTEXT,\n" +
             "\t`description`\tTEXT,\n" +
-            "\t`imageurl`\tTEXT,\n" +
+            "\t`image`\tBLOB,\n" +
             "\t`material`\tTEXT\n" +
             ");");
     }
@@ -58,10 +58,10 @@ public class BlindwallDBHandler extends SQLiteOpenHelper {
             int addressNumber = cursor.getInt(cursor.getColumnIndex("addressNumber"));
             String photographer = cursor.getString(cursor.getColumnIndex("photographer"));
             String description = cursor.getString(cursor.getColumnIndex("description"));
-            String imageurl = cursor.getString(cursor.getColumnIndex("imageurl"));
+            byte[] image = cursor.getBlob(cursor.getColumnIndex("image"));
             String material = cursor.getString(cursor.getColumnIndex("material"));
 
-            blindWalls.add(new BlindWall(id, title, address, photographer, addressNumber, description, imageurl, material));
+            blindWalls.add(new BlindWall(id, title, address, photographer, addressNumber, description, image, material));
             cursor.moveToNext();
         }
 
@@ -77,7 +77,7 @@ public class BlindwallDBHandler extends SQLiteOpenHelper {
         values.put("addressNumber", blindWall.getAddressNumber());
         values.put("photographer", blindWall.getPhotographer());
         values.put("description", blindWall.getDescription());
-        values.put("imageurl", blindWall.getImageUrl());
+        values.put("image", blindWall.getImage());
         values.put("material", blindWall.getMaterial());
 
         SQLiteDatabase db = this.getWritableDatabase();

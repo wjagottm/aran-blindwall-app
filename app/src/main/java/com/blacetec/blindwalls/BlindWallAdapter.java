@@ -1,6 +1,8 @@
 package com.blacetec.blindwalls;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,7 +66,11 @@ public class BlindWallAdapter extends BaseAdapter {
 
         viewHolder.title.setText(blindWall.getTitle());
 
-        new ImageLoader(viewHolder.imageView).execute(blindWall.getImageUrl());
+        if(blindWall.getImage()!=null){
+            Log.i(TAG, "Setting the image");
+            Bitmap imageMap = BitmapFactory.decodeByteArray(blindWall.getImage(), 0, blindWall.getImage().length);
+            viewHolder.imageView.setImageBitmap(imageMap);
+        }
 
         return convertView;
     }

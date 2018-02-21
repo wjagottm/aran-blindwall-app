@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements OnBlindWallsAvail
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        blindwallDBHandler = new BlindwallDBHandler(getApplicationContext(), "blindWall.db", null, 3);
+        blindwallDBHandler = new BlindwallDBHandler(getApplicationContext(), "blindWall.db", null, 9);
 
         String[] urls = new String[] { "https://api.blindwalls.gallery/apiv2/murals" };
 

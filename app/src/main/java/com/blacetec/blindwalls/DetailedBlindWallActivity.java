@@ -1,6 +1,8 @@
 package com.blacetec.blindwalls;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
@@ -32,8 +34,10 @@ public class DetailedBlindWallActivity extends AppCompatActivity {
         photographView.setText("Photographer: " + blindwall.getPhotographer());
         longDescriptionView.setText(blindwall.getDescription());
 
-        new ImageLoader(imageView).execute(blindwall.getImageUrl());
-
+        if(blindwall.getImage()!=null) {
+            Bitmap imageMap = BitmapFactory.decodeByteArray(blindwall.getImage(), 0, blindwall.getImage().length);
+            imageView.setImageBitmap(imageMap);
+        }
 
     }
 }

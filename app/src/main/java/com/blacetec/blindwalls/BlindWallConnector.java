@@ -1,5 +1,6 @@
 package com.blacetec.blindwalls;
 
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -7,10 +8,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
@@ -28,7 +27,7 @@ public class BlindWallConnector extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... strings) {
         BufferedReader bufferedReader = null;
-        String response = "";
+        String response;
 
         try {
             URL url = new URL(strings[0]);
@@ -67,17 +66,41 @@ public class BlindWallConnector extends AsyncTask<String, Void, String> {
             for(int idx = 0; idx < blindWalls.length(); idx++) {
                 JSONObject blindWall = blindWalls.getJSONObject(idx);
 
-                String material = blindWall.getJSONObject("material").getString("en");
-                String description = blindWall.getJSONObject("description").getString("en");
-                String title = blindWall.getJSONObject("title").getString("en").trim().replaceAll(" +", " ");
-                String imageString = "https://api.blindwalls.gallery/" + blindWall.getJSONArray("images").getJSONObject(0).getString("url");
-                int id = blindWall.getInt("id");
-                String photographer = blindWall.getString("photographer");
-                String address = blindWall.getString("address");
-                int addressNumber = blindWall.getInt("numberOnMap");
+                final String material = blindWall.getJSONObject("material").getString("en");
+                final String description = blindWall.getJSONObject("description").getString("en");
+                final String title = blindWall.getJSONObject("title").getString("en").trim().replaceAll(" +", " ");
+                String[] imageString = {"https://api.blindwalls.gallery/" + blindWall.getJSONArray("images").getJSONObject(0).getString("url")};
+                final int id = blindWall.getInt("id");
+                final String photographer = blindWall.getString("photographer");
+                final String address = blindWall.getString("address");
+                final int addressNumber = blindWall.getInt("numberOnMap");
 
-                BlindWall b = new BlindWall(id, title, address, photographer, addressNumber, description, imageString, material);
-                listener.OnBlindWallsAvailable(b);
+                getByteArray getByteArray = new getByteArray(){
+                    @Override
+                    protected void onPostExecute(Bitmap bmp) {
+                        byte[] imageBArray = null;
+                        if (bmp != null)
+                        {
+                            Log.i(TAG, "compressing to ByteArray");
+                            super.onPostExecute(bmp);
+
+                            Bitmap bm = bmp;
+
+                            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                            bm.compress(Bitmap.CompressFormat.JPEG, 40, bos);
+                            imageBArray = bos.toByteArray();
+                        } else {
+                            Log.i(TAG, "No BMP data found.");
+                        }
+
+                        BlindWall b = new BlindWall(id, title, address, photographer, addressNumber, description, imageBArray, material);
+                        listener.OnBlindWallsAvailable(b);
+                    }
+                };
+
+                getByteArray.execute(imageString);
+
+
             }
         } catch( JSONException ex) {
             Log.e(TAG, "onPostExecute JSONException " + ex.getLocalizedMessage());

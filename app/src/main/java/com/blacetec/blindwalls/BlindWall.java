@@ -13,10 +13,10 @@ public class BlindWall implements Serializable {
     private String photographer;
     private int addressNumber;
     private String description;
-    private String imageUrl;
+    private byte[] imageUrl;
     private String material;
 
-    public BlindWall(int id,String title, String address, String photographer, int addressNumber, String description, String imageUrl, String material) {
+    public BlindWall(int id,String title, String address, String photographer, int addressNumber, String description, byte[] imageUrl, String material) {
         this.id = id;
         this.title = title;
         this.address = address;
@@ -50,7 +50,7 @@ public class BlindWall implements Serializable {
         this.description = description;
     }
 
-    public void setImageUrl(String imageUrl) {
+    public void setImageUrl(byte[] imageUrl) {
         this.imageUrl = imageUrl;
     }
 
@@ -82,7 +82,7 @@ public class BlindWall implements Serializable {
         return description;
     }
 
-    public String getImageUrl() {
+    public byte[] getImage() {
         return imageUrl;
     }
 
